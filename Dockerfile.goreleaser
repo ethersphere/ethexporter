@@ -1,0 +1,22 @@
+FROM debian:10.2-slim
+
+ENV PORT 9890
+ENV DATA /app
+
+RUN mkdir -p /app && chown nobody:nogroup /app
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get install -y \
+        ca-certificates; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*;
+
+COPY ethexporter /usr/local/bin/ethexporter
+COPY ./data/addresses.txt /app/addresses.txt
+
+USER nobody
+VOLUME /app
+WORKDIR /app
+
+ENTRYPOINT ["ethexporter"]

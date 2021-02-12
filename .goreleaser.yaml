@@ -1,0 +1,45 @@
+project_name: ethexporter
+
+builds:
+  - id: linux-amd64
+    main: ./ethexporter
+    binary: ethexporter
+    goos:
+      - linux
+    goarch:
+      - amd64
+    flags:
+      - -v
+      - -trimpath
+    ldflags:
+      - -s -w
+
+snapshot:
+  name_template: "{{.Tag}}-snapshot"
+
+archives:
+  - name_template: "{{ tolower .ProjectName }}-{{ tolower .Os }}-{{ tolower .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    format: binary
+
+dockers:
+  -
+    binaries:
+      - ethexporter
+    builds:
+      - linux-amd64
+    goos: "linux"
+    goarch: "amd64"
+    image_templates:
+      - "ethersphere/ethexporter:{{ .Major }}"
+      - "ethersphere/ethexporter:{{ .Major }}.{{ .Minor }}"
+      - "ethersphere/ethexporter:{{ .Major }}.{{ .Minor }}.{{ .Patch }}"
+      - "ethersphere/ethexporter:latest"
+    dockerfile: Dockerfile.goreleaser
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+    extra_files:
+      - data/addresses.txt
