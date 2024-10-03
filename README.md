@@ -3,10 +3,10 @@
 A lightweight Prometheus exporter and [Grafana Dashboard](https://grafana.com/dashboards/6970) that will output Ethereum wallet balances from a list of addresses you specify. ETHexporter attaches to a geth server to fetch ethereum wallet balances for your Grafana dashboards. Many of you probably want to chart your ERC20 token balances, feel free to use [TOKENexporter](https://github.com/hunterlong/tokenexporter). If you also want a Bitcoin prometheus exporter, you can use [BTCexporter](https://github.com/hunterlong/btcexporter) which uses blockchain.info API.
 
 ## Watch Addresses
-The `addresses.txt` file holds all the addresses to fetch balances for. Use the format `name:address` on each new line.
+The `addresses.txt` file holds all the addresses to fetch balances for. Use the format `name:address:host` on each new line.
 ```
-etherdelta:0x8d12A197cB00D4747a1fe03395095ce2A5CC6819
-bittrex:0xFBb1b73C4f0BDa4f67dcA266ce6Ef42f520fBB98
+etherdelta:0x8d12A197cB00D4747a1fe03395095ce2A5CC6819:host1
+bittrex:0xFBb1b73C4f0BDa4f67dcA266ce6Ef42f520fBB98:host2
 ```
 
 ## Running the Exporter
